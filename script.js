@@ -135,7 +135,6 @@ if (activityButtons.length > 0) {
 }
 
 const recapSummary = document.getElementById('recap-summary');
-const sendStatus = document.getElementById('send-status');
 if (recapSummary) {
   const day = localStorage.getItem('askDate');
   const time = localStorage.getItem('askTime');
@@ -152,10 +151,6 @@ if (recapSummary) {
 
   recapSummary.textContent = finalText;
 
-  if (sendStatus) {
-    sendStatus.textContent = 'Invio automatico in corso...';
-  }
-
   const sendWithFormSubmit = async () => {
     try {
       const formData = new FormData();
@@ -169,13 +164,9 @@ if (recapSummary) {
         body: formData,
       });
 
-      if (response.ok) {
-        if (sendStatus) sendStatus.textContent = 'Invio completato, controlla la tua email.';
-      } else {
-        if (sendStatus) sendStatus.textContent = 'Invio automatico fallito. Copia il testo qui sopra manualmente.';
-      }
+      // Message status hidden so the recipient page stays clean.
     } catch (error) {
-      if (sendStatus) sendStatus.textContent = 'Invio automatico non disponibile. Copia il testo sopra.';
+      // Errors are kept silent on the page.
     }
   };
 
