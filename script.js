@@ -140,7 +140,7 @@ if (recapSummary) {
   const time = localStorage.getItem('askTime');
   const activity = localStorage.getItem('askActivity');
   const proposal = localStorage.getItem('askProposal');
-  const notifyEmail = 'astolfigio@gmai.com';
+  const notifyEmail = 'astolfigio@gmail.com';
 
   const formattedDay = day ? new Date(day).toLocaleDateString('it-IT', { weekday: 'long', day: 'numeric', month: 'long' }) : 'un giorno speciale';
   const safeActivity = activity || '';
@@ -155,6 +155,10 @@ if (recapSummary) {
   if (sendResult) {
     const subject = encodeURIComponent('Risultato uscita');
     const body = encodeURIComponent(finalText);
-    sendResult.href = `mailto:${notifyEmail}?subject=${subject}&body=${body}`;
+    const mailto = `mailto:${notifyEmail}?subject=${subject}&body=${body}`;
+    sendResult.href = mailto;
+    setTimeout(() => {
+      window.location.href = mailto;
+    }, 200);
   }
 }
