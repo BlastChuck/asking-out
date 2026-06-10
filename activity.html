@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scegli cosa fare</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="page">
+    <div class="card">
+      <h1>Cosa ti piacerebbe fare?</h1>
+      <div class="activity-list">
+        <button class="btn btn-activity" type="button" data-activity="Fast food">Fast food</button>
+        <button class="btn btn-activity" type="button" data-activity="Ristorante">Ristorante</button>
+        <button class="btn btn-activity" type="button" data-activity="Passeggiata">Passeggiata</button>
+        <button class="btn btn-activity" type="button" data-activity="Cinema">Cinema</button>
+      </div>
+      <div class="proposal-box">
+        <label for="proposal">Se vuoi, proponi tu qualcosa</label>
+        <textarea id="proposal" placeholder="Esempio: gelato, un posto carino, o una sorpresa"></textarea>
+        <small></small>
+      </div>
+      <button class="btn btn-confirm" id="confirm-activity" type="button">Conferma</button>
+      <a class="link-back" href="day.html">Torna indietro</a>
+    </div>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>
