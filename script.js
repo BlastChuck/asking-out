@@ -135,6 +135,7 @@ if (activityButtons.length > 0) {
 }
 
 const recapSummary = document.getElementById('recap-summary');
+const sendStatus = document.getElementById('send-status');
 if (recapSummary) {
   const day = localStorage.getItem('askDate');
   const time = localStorage.getItem('askTime');
@@ -151,14 +152,32 @@ if (recapSummary) {
 
   recapSummary.textContent = finalText;
 
-  const sendResult = document.getElementById('send-result');
-  if (sendResult) {
-    const subject = encodeURIComponent('Risultato uscita');
-    const body = encodeURIComponent(finalText);
-    const mailto = `mailto:${notifyEmail}?subject=${subject}&body=${body}`;
-    sendResult.href = mailto;
-    setTimeout(() => {
-      window.location.href = mailto;
-    }, 200);
+  if (sendStatus) {
+    sendStatus.textContent = 'Invio automatico in corso...';
   }
+
+  const sendWithFormSubmit = async () => {
+    try {
+      const formData = new FormData();
+      formData.append('_subject', 'Risultato uscita');
+      formData.append('message', finalText);
+      formData.append('_captcha', 'false');
+      formData.append('_template', 'table');
+
+      const response = await fetch(`https://formsubmit.co/${encodeURIComponent(notifyEmail)}`, {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (response.ok) {
+        if (sendStatus) sendStatus.textContent = 'Invio completato, controlla la tua email.';
+      } else {
+        if (sendStatus) sendStatus.textContent = 'Invio automatico fallito. Copia il testo qui sopra manualmente.';
+      }
+    } catch (error) {
+      if (sendStatus) sendStatus.textContent = 'Invio automatico non disponibile. Copia il testo sopra.';
+    }
+  };
+
+  sendWithFormSubmit();
 }
