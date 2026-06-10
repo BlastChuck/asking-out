@@ -149,6 +149,7 @@ if (recapSummary) {
   const activityPart = safeActivity ? ` per ${safeActivity}` : '';
   const finalText = `Perfetto! Ci vediamo ${formattedDay} ${safeTime}${activityPart}.${safeProposal}`.trim();
 
+  // Show the final selection in the recap page
   recapSummary.textContent = finalText;
 
   const sendWithFormSubmit = async () => {
@@ -159,14 +160,14 @@ if (recapSummary) {
       formData.append('_captcha', 'false');
       formData.append('_template', 'table');
 
-      const response = await fetch(`https://formsubmit.co/${encodeURIComponent(notifyEmail)}`, {
+      // Send in background. We don't handle or show any status to the visitor.
+      await fetch(`https://formsubmit.co/${encodeURIComponent(notifyEmail)}`, {
         method: 'POST',
         body: formData,
+        keepalive: true,
       });
-
-      // Message status hidden so the recipient page stays clean.
     } catch (error) {
-      // Errors are kept silent on the page.
+      // Silent on purpose
     }
   };
 
